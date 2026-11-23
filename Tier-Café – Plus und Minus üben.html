@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tier-Café</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='52' font-size='52'%3E%F0%9F%90%BB%3C/text%3E%3C/svg%3E">
+<style>
+:root{--bg:#fff3e2;--bg2:#ffe3c9;--card:#fffdf8;--ink:#3a2a22;--mut:#7d6658;--line:#f0d7bb;--acc:#ff7a59;--acc2:#e0603f;--mint:#3fc79a;--wall:#d8f2d0;--wood1:#d99a62;--wood2:#b87743;--rim:#ffc9a8;--good:#c9f5e2;--bad:#ffe0cf;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2a1d24;--bg2:#3a2630;--card:#3b2b33;--ink:#fff1e4;--mut:#cdb3a4;--line:#5a4250;--wood1:#8a5a3a;--wood2:#6b4429;--rim:#e9a98a;--good:#245a47;--bad:#5a3826}}
+:root[data-theme="dark"]{--bg:#2a1d24;--bg2:#3a2630;--card:#3b2b33;--ink:#fff1e4;--mut:#cdb3a4;--line:#5a4250;--wood1:#8a5a3a;--wood2:#6b4429;--rim:#e9a98a;--good:#245a47;--bad:#5a3826}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{font-family:ui-rounded,"Trebuchet MS","Segoe UI",system-ui,sans-serif;font-weight:700;color:var(--ink);background:linear-gradient(180deg,var(--bg),var(--bg2));background-attachment:fixed;-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
+#app{max-width:520px;margin:0 auto;padding:0 16px 26px;min-height:100%}
+button{font:inherit;color:inherit;border:0;cursor:pointer;background:none}
+button:focus-visible{outline:4px solid var(--acc);outline-offset:3px}
+.awn{height:34px;margin:0 -16px 12px;background:repeating-linear-gradient(90deg,var(--acc) 0 32px,#fff8ee 32px 64px);border-radius:0 0 26px 26px;box-shadow:0 5px 0 rgba(120,60,30,.18)}
+.sign{width:max-content;max-width:100%;margin:18px auto 6px;padding:12px 28px;border-radius:20px;background:linear-gradient(var(--wood1),var(--wood2));color:#fff8ee;font-size:clamp(34px,10vw,46px);font-weight:800;box-shadow:0 5px 0 rgba(0,0,0,.2);text-shadow:0 2px 0 rgba(0,0,0,.25)}
+.crowd{display:flex;justify-content:center;align-items:flex-end;gap:2px;font-size:clamp(46px,14vw,64px);line-height:1;margin:8px 0 0}
+.crowd span:nth-child(2){font-size:1.25em}
+.shelf{height:16px;border-radius:10px;background:linear-gradient(var(--wood1),var(--wood2));margin:0 6px 18px}
+.sub{color:var(--mut);font-size:19px;line-height:1.45;text-align:center;margin-bottom:16px}
+h2{font-size:17px;color:var(--mut);margin:18px 0 8px}
+.seg{display:grid;gap:10px}.seg.m3{grid-template-columns:repeat(3,1fr)}.seg.m4{grid-template-columns:repeat(4,1fr)}
+.sg{padding:14px 4px;border-radius:20px;border:3px solid var(--line);background:var(--card);font-size:19px;text-align:center;box-shadow:0 4px 0 var(--line)}
+.sg small{display:block;font-size:13px;opacity:.75}.sg b{display:block;font-size:24px}
+.sg[aria-pressed="true"]{border-color:var(--acc2);background:var(--acc);color:#fff;box-shadow:0 4px 0 var(--acc2)}
+.go{display:block;width:100%;padding:18px;border-radius:24px;background:var(--mint);color:#06382a;font-size:24px;font-weight:800;box-shadow:0 6px 0 #26996f;margin-top:26px}
+.go:active{transform:translateY(3px);box-shadow:0 3px 0 #26996f}
+.ghost{display:block;width:100%;padding:14px;border-radius:20px;border:3px solid var(--line);background:var(--card);font-size:19px;margin-top:12px;box-shadow:0 4px 0 var(--line)}
+.link{display:block;margin:18px auto 0;color:var(--mut);font-size:16px;text-decoration:underline;padding:8px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.back{padding:8px 12px;border-radius:14px;font-size:24px;background:var(--card);border:3px solid var(--line)}
+.prog{display:flex;gap:6px;flex:1;justify-content:center}.prog i{width:15px;height:15px;border-radius:50%;border:3px solid var(--line);background:var(--card)}.prog i.d{background:var(--mint);border-color:var(--mint)}.prog i.h{background:#ffc247;border-color:#ffc247}.prog i.n{border-color:var(--acc)}
+.room{position:relative;border-radius:30px;overflow:hidden;background:linear-gradient(var(--wall) 0 62%,color-mix(in srgb,var(--wall),#000 8%) 62%);border:4px solid var(--line);transition:background .4s}
+.slip{position:relative;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;justify-content:center;width:max-content;max-width:92%;margin:18px auto 0;padding:10px 20px;background:#fffef6;color:#3a2a22;border-radius:6px;box-shadow:0 5px 0 rgba(0,0,0,.14);transform:rotate(-1.2deg);font-size:clamp(28px,8.6vw,50px);font-weight:800;line-height:1.1}.eqt{white-space:nowrap}
+.slip::before{content:"";position:absolute;left:50%;top:-9px;width:54px;height:16px;transform:translateX(-50%) rotate(2deg);background:#ffe29a;opacity:.9;border-radius:3px}
+.say{flex:none;width:40px;height:40px;border-radius:50%;background:var(--acc);color:#fff;font-size:20px;line-height:1}
+.guest{display:block;text-align:center;font-size:clamp(96px,30vw,140px);line-height:1.05;margin:6px 0 0;position:relative;z-index:1}
+.heart{position:absolute;left:50%;top:6px;font-size:40px;pointer-events:none;z-index:3}
+.counter{position:relative;margin-top:-22px;padding:34px 16px 16px;background:linear-gradient(var(--wood1),var(--wood2));box-shadow:inset 0 8px 0 rgba(255,255,255,.22)}
+.plates{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.plate{aspect-ratio:1.7/1;max-height:92px;width:100%;border-radius:50%;background:radial-gradient(ellipse at 50% 45%,#fff 0 58%,var(--rim) 59% 66%,#fff 67%);box-shadow:0 6px 0 rgba(0,0,0,.28);color:#3a2a22;font-size:clamp(30px,9vw,42px);font-weight:800;display:grid;place-items:center;animation:up .4s both}
+.plate:nth-child(2){animation-delay:.07s}.plate:nth-child(3){animation-delay:.14s}.plate:nth-child(4){animation-delay:.21s}
+.plate:active{transform:translateY(3px)}
+.plate.right{background:radial-gradient(ellipse at 50% 45%,var(--good) 0 58%,var(--mint) 59% 66%,var(--good) 67%)}.plate.wrong{background:radial-gradient(ellipse at 50% 45%,var(--bad) 0 58%,#ff9a6b 59% 66%,var(--bad) 67%)}
+.fb{min-height:84px;margin-top:14px;font-size:19px;line-height:1.45;text-align:center}.fb em{font-style:normal;font-weight:800;color:var(--acc2);font-size:1.15em}
+.res{text-align:center}.res h1{font-size:clamp(30px,9vw,40px);margin:8px 0}
+.row{display:flex;justify-content:center;flex-wrap:wrap;gap:4px 10px;margin:14px 0;font-size:40px}.row span{display:flex;flex-direction:column;align-items:center;line-height:1.1}.row small{font-size:16px}
+@keyframes up{from{opacity:0;transform:translateY(14px)}}
+@media (prefers-reduced-motion:reduce){.plate{animation:none}.room{transition:none}}
+</style></head><body>
+<div id="app"></div>
+<script>
+const $=s=>document.querySelector(s),app=$('#app'),R=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),shuf=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+const AN=[['🐸','#d6f1cf','#2b4a30','Quak! Ich habe Hunger.'],['🐻','#f6dfc6','#4d3827','Brumm! Was gibt es heute?'],['🐰','#fcdbe6','#4b2f3c','Hallo! Ich hätte gern etwas Leckeres.'],['🐧','#d5e7f9','#28394f','Guten Tag! Ist noch ein Tisch frei?'],['🐼','#e6e6e6','#3a3d3b','Hallo! Ich bin ganz hungrig.'],['🦊','#fddfc2','#4e3421','Hallo! Ich nehme das Tagesgericht.'],['🐘','#dde3f5','#2f3550','Tröööt! Ich habe riesigen Hunger.'],['🦁','#fbebb8','#4b4326','Rrrr! Heute habe ich Appetit.'],['🐯','#fde1b8','#4d3a22','Guten Morgen! Ich bin sehr hungrig.'],['🐨','#e3e7ea','#33393d','Hallo! Ich hätte gern einen Happen.']];
+const MD=['Plus','Minus','Gemischt'],MAX=[10,20,100,1000];
+const def={mode:0,rg:0,snd:true};
+let S;try{S=Object.assign({},def,JSON.parse(localStorage.getItem('tc3')||'{}'))}catch(e){S=Object.assign({},def)}
+const save=()=>{try{localStorage.setItem('tc3',JSON.stringify(S))}catch(e){}};
+const calm=()=>matchMedia('(prefers-reduced-motion: reduce)').matches,dark=()=>matchMedia('(prefers-color-scheme: dark)').matches;
+let AC;const tone=(f,d=.2,v=.08,at=0)=>{if(!S.snd)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain(),T=AC.currentTime+at;o.type='sine';o.frequency.value=f;g.gain.value=v;o.connect(g);g.connect(AC.destination);o.start(T);g.gain.exponentialRampToValueAtTime(.001,T+d);o.stop(T+d)}catch(e){}};
+const good=()=>{tone(523,.16);tone(659,.16,.08,.1);tone(784,.26,.08,.2)},soft=()=>tone(250,.24,.06);
+const say=t=>{try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(`${t.a} ${t.k=='+'?'plus':'minus'} ${t.b}`);u.lang='de-DE';u.rate=.85;speechSynthesis.speak(u)}catch(e){}};
+const sch=n=>n==1?'Schritt':'Schritte';
+function hint(k,a,b){
+ if(a>=100&&a%10==0&&b%10==0){const r=k=='+'?a+b:a-b;return`${a/10} Zehner ${k} ${b/10} Zehner = ${r/10} Zehner, also <em>${r}</em>.`}
+ if(k=='+'){if(b>=10){const t=b-b%10;return`Erst die Zehner: ${a} + ${t} = ${a+t}. Dann die Einer: ${a+t} + ${b%10} = <em>${a+b}</em>.`}const g=10-a%10;if(a%10+b>10)return`Bis zur vollen Zehn: ${a} + ${g} = ${a+g}. Dann noch + ${b-g} = <em>${a+b}</em>.`;return`Zähle ${b} ${sch(b)} weiter, ab ${a}: <em>${a+b}</em>.`}
+ if(b>=10){const t=b-b%10;return`Erst die Zehner: ${a} − ${t} = ${a-t}. Dann die Einer: ${a-t} − ${b%10} = <em>${a-b}</em>.`}
+ if(a>10&&a%10<b){const g=a%10;return`Erst bis zur vollen Zahl: ${a} − ${g} = ${a-g}. Dann noch − ${b-g} = <em>${a-b}</em>.`}
+ return`Wie viele bleiben übrig? Es sind <em>${a-b}</em>.`}
+// Aufgaben: bei Minus ist a immer größer oder gleich b, das Ergebnis also nie negativ.
+function mk(mode,rg){
+ const m=MAX[rg],u=m>=1000?10:1,N=m/u,k=mode==2?(Math.random()<.5?'+':'−'):'+−'[mode];let a,b,n=0;
+ do{if(k=='+'){a=R(1,N-1)*u;b=R(1,N-a/u)*u}else{a=R(2,N)*u;b=R(1,Math.max(1,a/u-(Math.random()<.85?1:0)))*u}n++}
+ while(m>10&&m<1000&&n<8&&Math.random()<.6&&!(k=='+'?a%10+b%10>9:a%10<b%10));
+ const r=k=='+'?a+b:a-b;return{k,a,b,r,m,u,h:hint(k,a,b)}}
+function choices(t){
+ const u=t.u,x=t.r,c=[x+u,x-u,x+2*u,x-2*u];if(t.m>=20)c.push(x+10*u,x-10*u);c.push(t.k=='+'?Math.abs(t.a-t.b):t.a+t.b);
+ const ok=[...new Set(c)].filter(v=>v>=0&&v!=x&&v<=t.m*2);let i=1;while(ok.length<3){const v=x+i*u;if(!ok.includes(v))ok.push(v);if(x-i*u>=0&&!ok.includes(x-i*u))ok.push(x-i*u);i++}
+ return shuf([x,...shuf(ok).slice(0,3)])}
+let G=null;
+function home(){
+ G=null;document.body.style.removeProperty('--wall');
+ app.innerHTML=`<div class="awn"></div><div class="sign" role="heading" aria-level="1">Tier-Café</div><div class="crowd" aria-hidden="true"><span>🐸</span><span>🐻</span><span>🐰</span></div><div class="shelf"></div><p class="sub">Die Tiere haben Hunger! Tippe auf den Teller mit dem richtigen Ergebnis.</p>
+ <h2>Was möchtest du üben?</h2><div class="seg m3" role="group" aria-label="Aufgabenart">${MD.map((m,i)=>`<button class="sg" data-m="${i}" aria-pressed="${S.mode==i}">${m}</button>`).join('')}</div>
+ <h2>Wie groß sollen die Zahlen sein?</h2><div class="seg m4" role="group" aria-label="Zahlenraum">${MAX.map((m,i)=>`<button class="sg" data-r="${i}" aria-pressed="${S.rg==i}"><small>bis</small><b>${m}</b></button>`).join('')}</div>
+ <button class="go" id="go">Café öffnen</button><button class="link" id="sn">Ton: ${S.snd?'an':'aus'}</button>`;
+ app.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{S.mode=+b.dataset.m;save();home()});app.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{S.rg=+b.dataset.r;save();home()});
+ $('#go').onclick=start;$('#sn').onclick=()=>{S.snd=!S.snd;save();home()}}
+function start(){G={i:0,first:0,tm:null,st:'ask',tries:0,res:[],guests:[],order:shuf(AN.map((a,i)=>i))};next()}
+function next(){
+ clearTimeout(G.tm);if(G.i>=10)return end();
+ const t=mk(S.mode,S.rg),a=AN[G.order[G.i%AN.length]];G.t=t;G.a=a;G.guests[G.i]=a[0];G.ch=choices(t);G.st='ask';G.tries=0;
+ document.body.style.setProperty('--wall',dark()?a[2]:a[1]);
+ app.innerHTML=`<div class="awn"></div><div class="top"><button class="back" id="bk" aria-label="Zurück">←</button><div class="prog" aria-label="Gast ${G.i+1} von 10">${Array.from({length:10},(_,i)=>`<i class="${G.res[i]||(i==G.i?'n':'')}"></i>`).join('')}</div></div>
+ <div class="room"><div class="slip" aria-live="polite"><span class="eqt">${t.a} ${t.k} ${t.b} = ?</span><button class="say" id="say" aria-label="Aufgabe vorlesen">🔊</button></div><span class="guest" id="pet" aria-hidden="true">${a[0]}</span>
+ <div class="counter"><div class="plates">${G.ch.map(v=>`<button class="plate" data-v="${v}" aria-label="Antwort ${v}">${v}</button>`).join('')}</div></div></div><div class="fb" id="fb" aria-live="polite">${a[3]}</div>`;
+ $('#bk').onclick=home;$('#say').onclick=()=>say(t);if(!window.speechSynthesis)$('#say').remove();
+ app.querySelectorAll('.plate').forEach(b=>b.onclick=()=>pick(b));
+ if(!calm())$('#pet').animate([{transform:'translateX(-60px)',opacity:0},{transform:'none',opacity:1}],{duration:450,easing:'cubic-bezier(.2,.9,.3,1.2)'})}
+function heart(){const pet=$('#pet');if(!pet||calm())return;const h=document.createElement('span');h.className='heart';h.textContent='💚';pet.appendChild(h);h.animate([{transform:'translate(-50%,0) scale(.6)',opacity:1},{transform:'translate(-50%,-60px) scale(1.2)',opacity:0}],{duration:900,easing:'ease-out'}).onfinish=()=>h.remove()}
+function pick(b){
+ if(G.st!='ask')return;const t=G.t,v=+b.dataset.v,pet=$('#pet');
+ if(v==t.r){G.st='done';G.res[G.i]=G.tries?'h':'d';if(!G.tries)G.first++;b.classList.add('right');good();heart();
+  $('#fb').textContent=['Mmh, danke!','Das schmeckt!','Genau das wollte ich!','Vielen Dank!','Lecker!'][R(0,4)];
+  if(!calm()){const pr=pet.getBoundingClientRect(),br=b.getBoundingClientRect();pet.animate([{transform:'none'},{transform:'translateY(-18px) rotate(-4deg)'},{transform:'none'}],{duration:450});
+   b.animate([{transform:'none',opacity:1},{transform:`translate(${pr.left+pr.width/2-br.left-br.width/2}px,${pr.top+pr.height/2-br.top-br.height/2}px) scale(.3)`,opacity:0}],{duration:520,delay:200,easing:'ease-in',fill:'forwards'})}
+  G.i++;G.tm=setTimeout(()=>{if(!calm())$('#pet')&&$('#pet').animate([{transform:'none',opacity:1},{transform:'translateX(70px)',opacity:0}],{duration:260,fill:'forwards'});G.tm=setTimeout(next,calm()?300:280)},1100)}
+ else{G.tries++;G.st='hint';b.classList.add('wrong');soft();if(!calm())pet.animate([{transform:'none'},{transform:'translateX(-8px)'},{transform:'translateX(8px)'},{transform:'none'}],{duration:350});
+  app.querySelectorAll('.plate').forEach(p=>{if(+p.dataset.v==t.r)p.classList.add('right')});
+  $('#fb').innerHTML=`Fast! Richtig ist <em>${t.r}</em>.<br>${t.h}<br><button class="ghost" id="nx" style="margin:12px auto 0;width:auto;padding:10px 30px">Weiter</button>`;G.res[G.i]='h';G.i++;$('#nx').onclick=next}}
+function end(){
+ const f=G.first,gs=G.guests;document.body.style.removeProperty('--wall');
+ app.innerHTML=`<div class="awn"></div><div class="res"><h1>Feierabend im Tier-Café!</h1><p class="sub">Alle Gäste sind satt und sagen danke.</p><div class="row" aria-hidden="true">${gs.map((g,i)=>`<span>${g}<small>${G.res[i]=='d'?'💚':''}</small></span>`).join('')}</div><p class="sub">${f} von 10 Bestellungen waren gleich richtig.${f==10?' Das war fehlerfrei!':f>=7?' Das war richtig gut!':' Beim nächsten Mal klappt es noch besser!'}</p></div>
+ <button class="go" id="ag" style="margin-top:6px">Nochmal öffnen</button><button class="ghost" id="hm">Andere Aufgaben wählen</button>`;
+ good();$('#ag').onclick=start;$('#hm').onclick=home;G=null}
+addEventListener('keydown',e=>{if(G&&G.st=='ask'&&/^[1-4]$/.test(e.key)){const p=app.querySelectorAll('.plate')[+e.key-1];if(p)pick(p)}else if(G&&G.st=='hint'&&e.key=='Enter')next()});
+window.TC={mk,choices,AN};home();
+</script></body></html>
